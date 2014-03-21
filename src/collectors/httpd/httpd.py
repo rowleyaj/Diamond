@@ -111,7 +111,11 @@ class HttpdCollector(diamond.collector.Collector):
                         if k == 'IdleWorkers':
                             continue
 
-                        if k == 'Scoreboard':
+                        if k == 'Total Accesses':
+                            self.publish_counter('req_handled', int(v))
+                            self._publish(nickname, k, v)
+
+                        elif k == 'Scoreboard':
                             for sb_kv in self._parseScoreboard(v):
                                 self._publish(nickname, sb_kv[0], sb_kv[1])
                         else:
